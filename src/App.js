@@ -1,4 +1,3 @@
-import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
 import Components from "./pages/Components";
@@ -8,6 +7,7 @@ import Sidebar from "./components/Sidebar";
 import Login from "./components/Login";
 import Registration from "./components/Registration";
 import AdminPanel from "./pages/AdminPanel";
+
 
 function App() {
   return (

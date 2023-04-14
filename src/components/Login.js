@@ -1,16 +1,20 @@
 import { useState } from "react";
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
-import { json } from "react-router-dom";
-import Registration from "./Registration";
+import "./Registration.css";
+import { NavLink, useNavigate } from "react-router-dom";
 
 function Login(props) {
+  const history = useNavigate();
+  const changeForm = (e) => {
+    e.preventDefault();
+    props.toggleForm(true);
+  };
+
   const [userRegistration, setUserRegistration] = useState({
     email: "",
     password: "",
   });
-  const [sendToParent, setSendToParent] = useState([]);
-  const [toggleForm, setToggleForm] = useState(false);
+  // const [sendToParent, setSendToParent] = useState([]);
+  // const [toggleForm, setToggleForm] = useState(false);
 
   const onChangeHandler = (e) => {
     const name = e.target.name;
@@ -27,7 +31,7 @@ function Login(props) {
     e.preventDefault();
 
     const getUserArr = localStorage.getItem("userInfo");
-    console.log(getUserArr);
+    // console.log(getUserArr);
 
     const { email, password } = userRegistration;
     let userInfo = JSON.parse(localStorage.getItem("userInfo"));
@@ -57,54 +61,62 @@ function Login(props) {
         } else {
           console.log("User Login Successfully");
 
-          props.parentData(userLogin);
+          history("/AdminPanel");
+          // props.toggleForm(true);
         }
       }
     }
   };
-  console.log("userLogin", sendToParent);
 
-  const changeToRegistration = () => {
-    setToggleForm(true);
+  const userLogin = () => {
+    const userData = localStorage.getItem("userInfo");
+    console.log(userData);
   };
-
+  const { email, password } = userRegistration;
   return (
-    <>
-      {!toggleForm ? (
-        <Form>
-          <h3>Sign In</h3>
-          <Form.Group className="mb-3" controlId="formBasicEmail">
-            <Form.Label>Email address</Form.Label>
-            <Form.Control
+    <div className="wrapper bg-dark d-flex align-items-center justify-content-center w-100">
+      <div className="login">
+        <h2 className="mb-3">Login</h2>
+        <form>
+          <div className="form-group mb-2">
+            <label htmlFor="firstName" className="form-label">
+              Email
+            </label>
+            <input
               type="email"
               name="email"
-              placeholder="Enter email"
+              className="form-control"
               onChange={onChangeHandler}
             />
-            <Form.Text className="text-muted">
-              We'll never share your email with anyone else.
-            </Form.Text>
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="formBasicPassword">
-            <Form.Label>Password</Form.Label>
-            <Form.Control
+          </div>
+          <div className="form-group mb-2">
+            <label htmlFor="lastName" className="form-label">
+              password
+            </label>
+            <input
               type="password"
               name="password"
-              placeholder="Password"
+              className="form-control"
               onChange={onChangeHandler}
-            />
-          </Form.Group>
-          <Button variant="primary" onClick={saveData}>
-            Login
-          </Button>
-          New User? Please Register
-          <Button onClick={changeToRegistration}>Registration</Button>
-          <br />
-        </Form>
-      ) : (
-        <Registration />
-      )}
-    </>
+            ></input>
+          </div>
+          <button
+            onClick={saveData}
+            className="btn btn-success w-100 mt-2"
+            type="button"
+          >
+            {" "}
+            Submit
+          </button>
+        </form>
+        <p>
+          Don't have an account?
+          <span>
+            <NavLink to="/Registration">Register</NavLink>
+          </span>{" "}
+        </p>
+      </div>
+    </div>
   );
 }
 

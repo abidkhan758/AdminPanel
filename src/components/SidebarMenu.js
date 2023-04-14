@@ -116,6 +116,7 @@ const SidebarMenu = ({ showAnimation, route, isOpen,setIsOpen }) => {
           </motion.div>
         )}
       </AnimatePresence>
+      <Outlet/>
     </>
   );
 };

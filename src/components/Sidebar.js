@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import "../App.css";
+
 import { AnimatePresence, motion } from "framer-motion";
 import { FaHome, FaBars, FaUser, FaAngleDown } from "react-icons/fa";
 import { MdMessage } from "react-icons/md";
@@ -10,7 +12,7 @@ import SidebarMenu from "./SidebarMenu";
 
 const routes = [
   {
-    path: "/",
+    path: "Dashboard",
     name: "Dashboard",
     icon: <FaHome />,
   },
@@ -63,7 +65,7 @@ const routes = [
     path: "/tables",
     name: "Tables",
     icon: <BiCog />,
-    subRoutes: [ 
+    subRoutes: [
       {
         path: "/forms/profile",
         name: "Profile",
@@ -84,7 +86,6 @@ const routes = [
 ];
 const Sidebar = ({ children }) => {
   let userInfo = JSON.parse(localStorage.getItem("userInfo"));
-
 
   const [toggleThemeControl, setToggleThemeControl] = useState(false);
 
@@ -162,7 +163,6 @@ const Sidebar = ({ children }) => {
 
   const clearLocalStorage = () => {
     localStorage.removeItem("dataToLocal");
-   
   };
   return (
     <>
@@ -223,11 +223,7 @@ const Sidebar = ({ children }) => {
           className="sidebar"
         >
           <div className="top-section">
-            {isOpen && (
-              <h1 className="logo">
-             User Name
-              </h1>
-            )}
+            {isOpen && <h1 className="logo">User Name</h1>}
             <div className="bars">
               <FaBars onClick={toggle} />
             </div>
@@ -287,14 +283,9 @@ const Sidebar = ({ children }) => {
               );
             })}
           </section>
-          <form>
-            {/* <button type="submit" onClick={clearLocalStorage}>
-              Logout
-            </button> */}
-          </form>
+          <form></form>
         </motion.div>
         <main>{children}</main>
-       
       </div>
     </>
   );
